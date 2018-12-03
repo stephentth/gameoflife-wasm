@@ -12,15 +12,15 @@ func main() {
 	board := doc.Call("getElementById", "gof")
 	generationNumber := doc.Call("getElementById", "generationNumber")
 
-	world := gof.NewWorld(50, 30)
-	worldHTML := gof.RenderWorld(world)
+	world := gof.NewWorld(30, 80)
+	worldHTML := world.RenderHTML()
 	board.Set("innerHTML", worldHTML)
 	generationNumber.Set("innerHTML", 0)
 	time.Sleep(2 * time.Second)
 
 	for i := 1; i < 1000; i++ {
-		world = gof.NextGeneration(world)
-		worldHTML = gof.RenderWorld(world)
+		world = world.Next()
+		worldHTML = world.RenderHTML()
 		board.Set("innerHTML", worldHTML)
 		generationNumber.Set("innerHTML", i)
 		time.Sleep(200 * time.Microsecond)

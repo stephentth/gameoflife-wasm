@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -23,14 +22,16 @@ func clearScreen() {
 }
 
 func run() {
-	fmt.Println(runtime.GOOS)
 	world := gof.NewWorld(15, 15)
-	gof.PrintWorld(world)
+	world.Print()
+	time.Sleep(2 * time.Second)
+	clearScreen()
+
 	for i := 0; i < 1000; i++ {
+		world = world.Next()
+		world.Print()
 		time.Sleep(100 * time.Millisecond)
 		clearScreen()
-		world = gof.NextGeneration(world)
-		gof.PrintWorld(world)
 	}
 }
 
