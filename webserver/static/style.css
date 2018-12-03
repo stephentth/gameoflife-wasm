@@ -1,0 +1,27 @@
+.body {
+    background-color: antiquewhite;
+}
+
+.world {
+    background-color: black;
+}
+
+
+table {
+    border-spacing: 1px;
+    border-color: #eeeeee;
+    border: 2px solid gray;
+}
+
+.cell {
+    height: 12px;
+    width: 12px;
+}
+
+.dead {
+    background-color: #ffffff;
+}
+
+.live {
+    background-color: #cccccc;
+}
