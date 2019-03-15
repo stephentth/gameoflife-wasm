@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"time"
 
-	gof "gitlab.com/trunghieu.truong.bit/gameoflife/algorithm"
+	gof "github.com/stephentt-me/gameoflife-wasm/algorithm"
 )
 
 func clearScreen() {
