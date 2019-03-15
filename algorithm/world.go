@@ -1,12 +1,8 @@
 package algorithm
 
 import (
-	"fmt"
 	"math/rand"
 )
-
-const LIVECELL = "<td class='cell live'></td>"
-const DEADCELL = "<td class='cell dead'></td>"
 
 // World represent a configuration of GOF
 type World struct {
@@ -38,7 +34,6 @@ func (w World) IsAlive(x, y int) bool {
 	x %= w.width
 	y += w.height
 	y %= w.height
-	// fmt.Printf("x=%v y=%v result=%v\n", x, y, w.board[y][x])
 	return w.board[y][x]
 }
 
@@ -56,10 +51,8 @@ func (w World) IsAliveNext(x, y int) bool {
 		}
 	}
 	if (w.board[y][x] && count >= 2 && count <= 3) || (w.board[y][x] == false && count == 3) {
-		// fmt.Printf("this cell (%v, %v) is alive\n", x, y)
 		return true
 	}
-	// fmt.Printf("this cell (%v, %v) is dead\n", x, y)
 	return false
 }
 
@@ -68,43 +61,8 @@ func (w World) Next() World {
 	newWorld := DuplicateWorld(w)
 	for i := 0; i < w.height; i++ {
 		for j := 0; j < w.width; j++ {
-			// fmt.Printf("Scan at col=%v line=%v\n", j, i)
 			newWorld.board[i][j] = w.IsAliveNext(j, i)
 		}
 	}
 	return newWorld
-}
-
-// Print World into std.out
-func (w World) Print() {
-	for i := 0; i < w.height; i++ {
-		for j := 0; j < w.width; j++ {
-			if w.board[i][j] {
-				fmt.Printf("1 ")
-			} else {
-				fmt.Printf("0 ")
-			}
-		}
-		fmt.Printf("\n")
-	}
-	fmt.Printf("\n")
-}
-
-// RenderHTML ..
-func (w World) RenderHTML() string {
-	html := ""
-	html += "<table>"
-	for i := 0; i < w.height; i++ {
-		html += "<tr>"
-		for j := 0; j < w.width; j++ {
-			if w.board[i][j] {
-				html += LIVECELL
-			} else {
-				html += DEADCELL
-			}
-		}
-		html += "</tr>\n"
-	}
-	html += "</table>\n"
-	return html
 }
