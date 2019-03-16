@@ -1,11 +1,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script src="/static/wasm_exec.js"></script>
-		<link rel="stylesheet" href="/static/style.css">
+		<script src="wasm_exec.js"></script>
+		<link rel="stylesheet" href="style.css">
 		<script>
 			const go = new Go();
-			WebAssembly.instantiateStreaming(fetch("/static/script.wasm"), go.importObject)
+			WebAssembly.instantiateStreaming(fetch("script.wasm"), go.importObject)
 				.then((result) => {
 					go.run(result.instance);
 				})
