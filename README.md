@@ -1,10 +1,19 @@
 # Game Of Life - Wasm
 
-An implementation of Game Of Life, written in Go.
+An implementation of Game Of Life, written in Go. Support WASM.
 
 ## Screenshots
 
-WIP
+The first 10 seconds. Run on browser by using WASM.
+
+<p align="center">
+  <img src="./docs/gameoflife-10s.gif">
+</p>
+
+## Prerequisites
+
+* Go >= 1.11
+* A morden browser with WebAssembly support.
 
 ## Use as Library
 
@@ -15,7 +24,11 @@ WIP
 **Build and Run showcase webserver**
 
 ```
-./runserver.sh
+make build
+```
+
+```
+serve web
 ```
 
 **Test**
