@@ -1,13 +1,13 @@
 # Game Of Life - Wasm
 
-An implementation of Game Of Life, written in Go. Support WASM.
+An implementation of [Game Of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), written in Go. Support WASM.
 
 ## Screenshots
 
 The first 10 seconds. Run on browser by using WASM.
 
 <p align="center">
-  <img src="./docs/gameoflife-10s.gif">
+  <img src="./media/gameoflife-10s.gif">
 </p>
 
 ## Prerequisites
@@ -34,7 +34,7 @@ serve web
 **Test**
 
 ```
-go test ./...
+make test
 ```
 
 ## LICENCE

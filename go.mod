@@ -1,3 +1,3 @@
 module github.com/stephentt-me/gameoflife-wasm
 
-go 1.12
+go 1.16

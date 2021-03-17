@@ -1,6 +1,7 @@
 package algorithm
 
 import (
+	"fmt"
 	"math/rand"
 )
 
@@ -17,7 +18,8 @@ func NewWorld(height, width int) World {
 	for i := range world {
 		world[i] = make([]bool, width)
 		for j := range world[i] {
-			// TODO: dehardcode random function
+			// Seed init state
+			// TODO: improve random init state
 			if rand.Int()%3 == 0 {
 				world[i][j] = true
 			} else {
@@ -28,8 +30,8 @@ func NewWorld(height, width int) World {
 	return World{world, height, width}
 }
 
-// IsAlive check if a specific cell is alive
-func (w World) IsAlive(x, y int) bool {
+// isAlive check if a specific cell is alive
+func (w *World) isAlive(x, y int) bool {
 	x += w.width
 	x %= w.width
 	y += w.height
@@ -37,32 +39,53 @@ func (w World) IsAlive(x, y int) bool {
 	return w.board[y][x]
 }
 
-// IsAliveNext ..
-func (w World) IsAliveNext(x, y int) bool {
+// willAliveNextGen ..
+func (w *World) willAliveNextGen(x, y int) bool {
 	var count int8
 	for i := -1; i <= 1; i++ {
 		for j := -1; j <= 1; j++ {
 			if i == 0 && j == 0 {
 				continue
 			}
-			if w.IsAlive(x+j, y+i) {
+			if w.isAlive(x+j, y+i) {
 				count++
 			}
 		}
 	}
-	if (w.board[y][x] && count >= 2 && count <= 3) || (w.board[y][x] == false && count == 3) {
+	if count == 3 || (w.board[y][x] && count == 2) {
 		return true
 	}
 	return false
 }
 
+func (w *World) Get() ([][]bool, int, int) {
+	return w.board, w.height, w.width
+}
+
 // Next generate next configuration
-func (w World) Next() World {
-	newWorld := DuplicateWorld(w)
-	for i := 0; i < w.height; i++ {
-		for j := 0; j < w.width; j++ {
-			newWorld.board[i][j] = w.IsAliveNext(j, i)
+func (w *World) Next() {
+	newBoard := make([][]bool, w.height)
+
+	for i := 0; i < w.height; i++ { // y
+		newBoard[i] = make([]bool, w.width)
+		for j := 0; j < w.width; j++ { // x
+			newBoard[i][j] = w.willAliveNextGen(j, i)
 		}
 	}
-	return newWorld
+	w.board = newBoard
+}
+
+// Print World into std.out
+func (w *World) Print() {
+	for i := 0; i < w.height; i++ {
+		for j := 0; j < w.width; j++ {
+			if w.board[i][j] {
+				fmt.Printf("X")
+			} else {
+				fmt.Printf(" ")
+			}
+		}
+		fmt.Printf("\n")
+	}
+	fmt.Printf("\n")
 }
