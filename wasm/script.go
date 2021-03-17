@@ -14,9 +14,6 @@ var backgroundColor = "rgb(245, 246, 247)"
 var cellColor = "rgb(150,212,168)"
 
 func renderCanvas(world *algorithm.World, canvas *js.Value, canvasHeight, canvasWidth int) {
-	// canvas.Set("fillStyle", "rgb(255, 0, 255)")
-	// canvas.Call("fillRect", 0, 0, canvasHeight, canvasWidth)
-
 	board, height, width := world.Get()
 	for i := 0; i < height; i++ { // y
 		for j := 0; j < width; j++ { // x
