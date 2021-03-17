@@ -7,7 +7,7 @@ An implementation of [Game Of Life](https://en.wikipedia.org/wiki/Conway%27s_Gam
 The first 10 seconds. Run on browser by using WASM.
 
 <p align="center">
-  <img src="./docs/gameoflife-10s.gif">
+  <img src="./gameoflife-10s.gif">
 </p>
 
 ## Prerequisites

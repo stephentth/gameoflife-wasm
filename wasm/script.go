@@ -7,16 +7,25 @@ import (
 	"github.com/stephentt-me/gameoflife-wasm/algorithm"
 )
 
+var canvasHeight = 500
+var canvasWidth = 1000
+var cellSize = 10
+var backgroundColor = "rgb(245, 246, 247)"
+var cellColor = "rgb(150,212,168)"
+
 func renderCanvas(world *algorithm.World, canvas *js.Value, canvasHeight, canvasWidth int) {
-	canvas.Set("fillStyle", "rgb(255, 0, 255)")
-	canvas.Call("fillRect", 0, 0, canvasHeight, canvasWidth)
+	// canvas.Set("fillStyle", "rgb(255, 0, 255)")
+	// canvas.Call("fillRect", 0, 0, canvasHeight, canvasWidth)
 
 	board, height, width := world.Get()
-	for i := 0; i < height; i++ {
-		for j := 0; j < width; j++ {
+	for i := 0; i < height; i++ { // y
+		for j := 0; j < width; j++ { // x
 			if board[i][j] {
-				canvas.Call("fillReact")
+				canvas.Set("fillStyle", cellColor)
+			} else {
+				canvas.Set("fillStyle", backgroundColor)
 			}
+			canvas.Call("fillRect", cellSize*j, cellSize*i, cellSize*(j+1), cellSize*(i+1))
 		}
 	}
 }
@@ -28,23 +37,20 @@ func main() {
 	canvasCtx := canvas.Call("getContext", "2d")
 	generationNumber.Set("innerHTML", 0)
 
-	canvasHeight := 250
-	canvasWidth := 750
-
-	world := algorithm.NewWorld(30, 80)
+	world := algorithm.NewWorld(canvasHeight/cellSize, canvasWidth/cellSize)
 	// init the canvas
 	canvas.Call("setAttribute", "width", canvasWidth)
 	canvas.Call("setAttribute", "height", canvasHeight)
-	canvas.Set("fillStyle", "rgb(255, 0, 255)")
-	canvas.Call("fillRect", 0, 0, canvasWidth, canvasHeight)
+	canvasCtx.Set("fillStyle", backgroundColor)
+	canvasCtx.Call("fillRect", 0, 0, canvasWidth, canvasHeight)
 
-	// renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
-	// time.Sleep(200 * time.Microsecond)
+	renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
+	time.Sleep(1 * time.Second)
 
 	for i := 1; i < 9999; i++ {
 		renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
 		generationNumber.Set("innerHTML", i)
-		time.Sleep(200 * time.Microsecond)
+		time.Sleep(80 * time.Millisecond)
 
 		world.Next()
 	}
