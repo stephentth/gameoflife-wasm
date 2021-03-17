@@ -12,7 +12,6 @@ type World struct {
 	width  int
 }
 
-// NewWorld ..
 func NewWorld(height, width int) World {
 	world := make([][]bool, height)
 	for i := range world {
@@ -39,7 +38,6 @@ func (w *World) isAlive(x, y int) bool {
 	return w.board[y][x]
 }
 
-// willAliveNextGen ..
 func (w *World) willAliveNextGen(x, y int) bool {
 	var count int8
 	for i := -1; i <= 1; i++ {

@@ -44,7 +44,7 @@ func main() {
 	renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
 	time.Sleep(1 * time.Second)
 
-	for i := 1; i < 9999; i++ {
+	for i := 1; ; i++ {
 		renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
 		generationNumber.Set("innerHTML", i)
 		time.Sleep(80 * time.Millisecond)
