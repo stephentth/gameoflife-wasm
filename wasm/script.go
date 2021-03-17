@@ -4,25 +4,48 @@ import (
 	"syscall/js"
 	"time"
 
-	gof "github.com/stephentt-me/gameoflife-wasm/algorithm"
+	"github.com/stephentt-me/gameoflife-wasm/algorithm"
 )
+
+func renderCanvas(world *algorithm.World, canvas *js.Value, canvasHeight, canvasWidth int) {
+	canvas.Set("fillStyle", "rgb(255, 0, 255)")
+	canvas.Call("fillRect", 0, 0, canvasHeight, canvasWidth)
+
+	board, height, width := world.Get()
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			if board[i][j] {
+				canvas.Call("fillReact")
+			}
+		}
+	}
+}
 
 func main() {
 	doc := js.Global().Get("document")
-	board := doc.Call("getElementById", "gof")
 	generationNumber := doc.Call("getElementById", "generationNumber")
-
-	world := gof.NewWorld(30, 80)
-	worldHTML := world.RenderHTML()
-	board.Set("innerHTML", worldHTML)
+	canvas := doc.Call("getElementById", "gof")
+	canvasCtx := canvas.Call("getContext", "2d")
 	generationNumber.Set("innerHTML", 0)
-	time.Sleep(2 * time.Second)
 
-	for i := 1; i < 1000; i++ {
-		world = world.Next()
-		worldHTML = world.RenderHTML()
-		board.Set("innerHTML", worldHTML)
+	canvasHeight := 250
+	canvasWidth := 750
+
+	world := algorithm.NewWorld(30, 80)
+	// init the canvas
+	canvas.Call("setAttribute", "width", canvasWidth)
+	canvas.Call("setAttribute", "height", canvasHeight)
+	canvas.Set("fillStyle", "rgb(255, 0, 255)")
+	canvas.Call("fillRect", 0, 0, canvasWidth, canvasHeight)
+
+	// renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
+	// time.Sleep(200 * time.Microsecond)
+
+	for i := 1; i < 9999; i++ {
+		renderCanvas(&world, &canvasCtx, canvasHeight, canvasWidth)
 		generationNumber.Set("innerHTML", i)
 		time.Sleep(200 * time.Microsecond)
+
+		world.Next()
 	}
 }
