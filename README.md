@@ -2,6 +2,8 @@
 
 An implementation of [Game Of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), written in Go. Support WASM.
 
+Try it at: https://stephentt-me.github.io/gameoflife-wasm/
+
 ## Screenshots
 
 The first 10 seconds. Run on browser by using WASM.
@@ -15,27 +17,13 @@ The first 10 seconds. Run on browser by using WASM.
 * Go >= 1.11
 * A morden browser with WebAssembly support.
 
-## Use as Library
-
-WIP
 
 ## Usage
 
-**Build and Run showcase webserver**
+Treat Makefile as good starting point.
 
-```
-make build
-```
-
-```
-serve web
-```
-
-**Test**
-
-```
-make test
-```
+* Compile with `make build`
+* Run unit test `make test`
 
 ## LICENCE
 
