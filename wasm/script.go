@@ -1,9 +1,11 @@
 package main
 
 import (
+	"io/fs"
 	"syscall/js"
 	"time"
 
+	root "github.com/stephentt-me/gameoflife-wasm"
 	"github.com/stephentt-me/gameoflife-wasm/algorithm"
 )
 
@@ -33,9 +35,20 @@ func main() {
 	canvas := doc.Call("getElementById", "gof")
 	canvasCtx := canvas.Call("getContext", "2d")
 	generationNumber.Set("innerHTML", 0)
+	_ = doc.Call("getElementById", "presetInput")
+
+	dirs, err := fs.ReadDir(root.Patterns, "patterns")
+	if err != nil {
+		panic(err)
+	}
+
+	patternNames := make([]string, 0)
+	for _, f := range dirs {
+		patternNames = append(patternNames, f.Name())
+	}
 
 	world := algorithm.NewWorld(canvasHeight/cellSize, canvasWidth/cellSize)
-	// init the canvas
+
 	canvas.Call("setAttribute", "width", canvasWidth)
 	canvas.Call("setAttribute", "height", canvasHeight)
 	canvasCtx.Set("fillStyle", backgroundColor)
