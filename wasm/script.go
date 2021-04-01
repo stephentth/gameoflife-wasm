@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/fs"
 	"syscall/js"
 	"time"
@@ -35,7 +36,7 @@ func main() {
 	canvas := doc.Call("getElementById", "gof")
 	canvasCtx := canvas.Call("getContext", "2d")
 	generationNumber.Set("innerHTML", 0)
-	_ = doc.Call("getElementById", "presetInput")
+	dropdownNode := doc.Call("getElementById", "presetInput")
 
 	dirs, err := fs.ReadDir(root.Patterns, "patterns")
 	if err != nil {
@@ -44,7 +45,11 @@ func main() {
 
 	patternNames := make([]string, 0)
 	for _, f := range dirs {
+		fmt.Println("loaded pattern", f.Name())
 		patternNames = append(patternNames, f.Name())
+		optNode := doc.Call("createElement", "option")
+		optNode.Set("innerHTML", f.Name())
+		dropdownNode.Call("appendChild", optNode)
 	}
 
 	world := algorithm.NewWorld(canvasHeight/cellSize, canvasWidth/cellSize)
